@@ -1,0 +1,2 @@
+Hello, world! from a text file
+This is a test file to test fs capabilities
