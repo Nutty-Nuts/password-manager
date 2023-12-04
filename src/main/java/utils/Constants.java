@@ -5,6 +5,8 @@ public class Constants {
 
     public static class PATH {
         public static final String PATH = "src/main/storage/";
-        public static final String PASSWORDS = "src/main/storage/passwords.txt";
+        public static final String PASSWORDS = PATH + "passwords.txt";
+        public static final String SERVICES = PATH + "services.txt";
+        public static final String ACCOUNTS = PATH + "accounts.txt";
     }
 }

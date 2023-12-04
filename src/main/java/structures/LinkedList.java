@@ -1,16 +1,6 @@
 package structures;
 
-class Node<T> {
-    public T value;
-    Node<T> next;
-    Node<T> prev;
-
-    public Node(T value) {
-        this.value = value;
-        this.next = null;
-        this.prev = null;
-    }
-}
+import structures.Node;
 
 public class LinkedList<T> {
     private int length;
@@ -76,34 +66,38 @@ public class LinkedList<T> {
         current.prev = node;
     }
 
-    public void remove(int index) {
+    public void shift() {
+        this.head = this.head.next;
         this.length = Math.max(0, this.length - 1);
+    }
 
-        if (this.head == this.tail) {
-            this.head = null;
-            return;
+    public void pop() {
+        this.tail = this.tail.prev;
+        this.length = Math.max(0, this.length - 1);
+    }
+
+    public void remove(int index) {
+        if (index < 0 || index >= this.length) {
+            System.out.println("Please enter a valid index");
         }
+
         if (index == 0) {
-            this.head = this.head.next;
-            this.head.prev = null;
+            shift();
             return;
         }
-        if (index == this.length() - 1) {
-            this.tail = this.tail.prev;
-            this.tail.next = null;
-            return;
-        }
-        if (this.length == 0) {
-            this.head = null;
-            this.tail = null;
-        }
-        if (this.head == null) {
+        if (index == this.length - 1) {
+            pop();
             return;
         }
 
         Node<T> current = this.get(index);
-        current.next.prev = current.prev;
-        current.prev.next = current.next;
+        Node<T> prev = current.prev;
+        Node<T> next = current.next;
+
+        prev.next = next;
+        next.prev = prev;
+
+        this.length = Math.max(0, this.length - 1);
     }
 
     public Node<T> get(int index) {

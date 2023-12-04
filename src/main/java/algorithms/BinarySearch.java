@@ -1,17 +1,20 @@
 package algorithms;
 
+import structures.Entry;
+
 /**
  * BinarySearch
  */
 public class BinarySearch {
-    public static int binarySearch(String[] array, String target, int size) {
+    public static int binarySearch(Entry[] array, String target, int size) {
         int left = 0;
         int right = size - 1;
 
         while (left <= right) {
             int mid = left + (right - left) / 2;
 
-            int res = target.compareTo(array[mid]);
+            String key = array[mid].key();
+            int res = target.compareTo(key);
 
             if (res == 0) {
                 return mid;

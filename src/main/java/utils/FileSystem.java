@@ -1,11 +1,13 @@
 package utils;
 
 import java.io.*;
-import java.util.Scanner;
+import utils.Logger;
 
 public class FileSystem {
-    public FileSystem() {
+    private Logger logger;
 
+    public FileSystem() {
+        logger = new Logger(false);
     }
 
     public void readFromFile(String filename) {
@@ -27,11 +29,11 @@ public class FileSystem {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                output = output + line;
+                output = output + line + "\n";
             }
-            System.out.println("Fetched contents of " + filename);
+            logger.log("Fetched contents of " + filename);
         } catch (IOException e) {
-            System.out.println("Error reading from file: " + e.getMessage());
+            logger.log("Error reading from file: " + e.getMessage());
         }
 
         return output;
@@ -40,7 +42,7 @@ public class FileSystem {
     public void writeToFile(String filename, String data) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             writer.write(data);
-            System.out.println("Data successfully written to " + filename);
+            logger.log("Data successfully written to " + filename);
         } catch (IOException e) {
             System.out.println("Error writing to file: " + e.getMessage());
         }
@@ -49,7 +51,7 @@ public class FileSystem {
     public void appendToFile(String filename, String data) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
             writer.write(data);
-            System.out.println("Data successfully appended to " + filename);
+            logger.log("Data successfully appended to " + filename);
         } catch (IOException e) {
             System.out.println("Error appending to file: " + e.getMessage());
         }
@@ -62,9 +64,18 @@ public class FileSystem {
 
         try (PrintWriter writer = new PrintWriter(filename)) {
             // You can add logic here to input and store passwords securely
-            System.out.printf("File created: %s.txt\n", filename);
+            logger.log("File created: " + filename + ".txt");
         } catch (IOException e) {
             System.out.println("Error creating file: " + e.getMessage());
+        }
+    }
+
+    public void deleteFile(String filename) {
+        File myObj = new File(filename);
+        if (myObj.delete()) {
+            logger.log("Deleted the file: " + myObj.getName());
+        } else {
+            logger.log("Failed to delete the file.");
         }
     }
 }

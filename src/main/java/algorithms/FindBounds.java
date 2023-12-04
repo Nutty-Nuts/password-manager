@@ -2,6 +2,7 @@ package algorithms;
 
 public class FindBounds {
     public static int lowerBounds(String[] array, String term, int length) {
+        term = term.toLowerCase();
         int jump = (int) Math.sqrt(length);
         char firstChar = term.charAt(0);
 
@@ -11,8 +12,12 @@ public class FindBounds {
                 break;
             }
         }
+
         if (i >= length) {
             i = length - 1;
+        }
+        if (!(firstChar <= array[i].toLowerCase().charAt(0))) {
+            return -1;
         }
 
         i = Math.max(0, i - jump);
@@ -35,6 +40,7 @@ public class FindBounds {
     }
 
     public static int upperBounds(String[] array, String term, int length) {
+        term = term.toLowerCase();
         int jump = (int) Math.sqrt(length);
         char firstChar = term.charAt(0);
 
@@ -43,6 +49,13 @@ public class FindBounds {
             if (firstChar >= array[i].toLowerCase().charAt(0)) {
                 break;
             }
+        }
+
+        if (i <= 0) {
+            i = 0;
+        }
+        if (!(firstChar >= array[i].toLowerCase().charAt(0))) {
+            return -1;
         }
 
         i = Math.min(i + jump, length - 1);
